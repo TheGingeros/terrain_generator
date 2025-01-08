@@ -21,3 +21,9 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
             "object.create_terrain",
             text="Create Terrain"
         )
+        box = layout.box()
+        box.prop(
+            context.scene,
+            "terrainSize"   
+        )
+        

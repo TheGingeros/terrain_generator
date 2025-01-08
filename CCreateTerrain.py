@@ -8,7 +8,6 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
     def execute(self, context):
         self.createTerrain(context)
         return {'FINISHED'}
-    
     def createTerrain(self, context):
         userSize = 10
         userSubdivision = 100
@@ -90,3 +89,27 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
 
         # Apply smooth shading to the object
         bpy.ops.object.shade_smooth()
+
+    bpy.types.Scene.terrainSize = bpy.props.FloatProperty(
+        name="Size of Terrain", 
+        default=2,
+        min=0)
+    bpy.types.Scene.numberOfSubdivision = bpy.props.FloatProperty(
+        name="Number of cuts for the grid object",
+        default=10,
+        min=0)
+    bpy.types.Scene.terrainVariety = bpy.props.FloatProperty(
+        name="Terrain Variety",
+        default=1)
+    bpy.types.Scene.terrainDetail = bpy.props.FloatProperty(
+        name="Terrain Detail",
+        default=5)
+    bpy.types.Scene.terrainRoughness = bpy.props.FloatProperty(
+        name="Terrain Roughness",
+        default=0.5)
+    bpy.types.Scene.terrainDistortion = bpy.props.FloatProperty(
+        name="Terrain Distortion",
+        default=0)
+    bpy.types.Scene.randomSeed = bpy.props.FloatProperty(
+        name="Random seed for terrain generation",
+        default=50)
