@@ -11,7 +11,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
     
     def createTerrain(self, context):
         userSize = 10
-        userSubdivision = 50
+        userSubdivision = 100
         bpy.ops.mesh.primitive_grid_add(
             x_subdivisions=userSubdivision, 
             y_subdivisions=userSubdivision, 
@@ -25,35 +25,8 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
         selectedObjs = bpy.context.selected_objects
         terrainObject = selectedObjs[0]
         self.createTerrainMaterial(context, terrainObject)
-        # terrainMaterial = self.createTerrainMaterial(context, terrainObject)
-        # terrainObject.data.materials.append(terrainMaterial)
 
         print("Terrain Created")
-
-    def createTerrainMaterialUsingModifier(self, context, grid):
-
-        # Add a Subdivision Surface modifier for more geometry
-        bpy.ops.object.modifier_add(type='SUBSURF')
-        subsurf_mod = grid.modifiers[-1]
-        subsurf_mod.levels = 4  # Viewport subdivisions
-        subsurf_mod.render_levels = 6  # Render subdivisions
-
-        # Add a Displace modifier for terrain shaping
-        bpy.ops.object.modifier_add(type='DISPLACE')
-        displace_mod = grid.modifiers[-1]
-        displace_mod.name = "TerrainDisplacement"
-
-        # Create a new texture for the displacement modifier
-        disp_texture = bpy.data.textures.new(name="TerrainHeightMap", type='CLOUDS')
-        disp_texture.noise_scale = 2.0  # Adjust noise scale for terrain detail
-        disp_texture.noise_depth = 4  # Increase detail in the noise
-
-        # Assign the texture to the displacement modifier
-        displace_mod.texture = disp_texture
-        displace_mod.texture_coords = 'GLOBAL'
-
-        # Apply smooth shading to the object
-        bpy.ops.object.shade_smooth()
 
     def createTerrainMaterial(self, context, grid):
         geo_nodes = grid.modifiers.new(name="TerrainGenerator", type='NODES')
@@ -82,9 +55,6 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
 
         group_output = nodes.new(type="NodeGroupOutput")
         group_output.location = (400, 0)
-
-        # Link input to output (pass-through)
-        #links.new(group_input.outputs[0], group_output.inputs[0])
 
         # Add a Noise Texture node
         noise_texture = nodes.new(type="ShaderNodeTexNoise")
