@@ -22,8 +22,42 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
             text="Create Terrain"
         )
         box = layout.box()
-        box.prop(
+        box.label(
+            text="Terrain Properties:"
+        )
+        row = box.row()
+        row.prop(
             context.scene,
             "terrainSize"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "numberOfSubdivision"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "terrainVariety"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "terrainDetail"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "terrainRoughness"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "terrainDistortion"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "randomSeed"   
         )
         
