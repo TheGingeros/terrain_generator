@@ -23,9 +23,11 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
 
         selectedObjs = bpy.context.selected_objects
         terrainObject = selectedObjs[0]
+        terrainObject.name="Terrain"
         self.createTerrainMaterial(context, terrainObject)
 
         print("Terrain Created")
+        context.scene.terrainGenerated = True
 
     def createTerrainMaterial(self, context, grid):
         geo_nodes = grid.modifiers.new(name="TerrainGenerator", type='NODES')
@@ -113,3 +115,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
     bpy.types.Scene.randomSeed = bpy.props.FloatProperty(
         name="Random seed for terrain generation",
         default=50)
+    bpy.types.Scene.terrainGenerated = bpy.props.BoolProperty(
+        name="Check if terrain was generated",
+        default=False
+    )
