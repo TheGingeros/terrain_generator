@@ -103,9 +103,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
         if not context.scene.terrainObject:
             print("Terrain object no longer exists")
             return
-        for obj in context.selectable_objects:
-            if obj.name == "Terrain":
-                terrainObject = obj
+        terrainObject = bpy.data.objects.get(context.scene.terrainObject)
 
         for mod in terrainObject.modifiers:
             if mod.type == 'NODES':
@@ -116,6 +114,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
             if node.type == 'TEX_NOISE':
                 noiseTexture = node
         
+        terrainObject.dimensions = (context.scene.terrainSize,context.scene.terrainSize,terrainObject.dimensions[2])
         noiseTexture.inputs["Scale"].default_value = context.scene.terrainVariety
         noiseTexture.inputs["Detail"].default_value = context.scene.terrainDetail
         noiseTexture.inputs["Roughness"].default_value = context.scene.terrainRoughness
