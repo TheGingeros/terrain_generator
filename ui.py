@@ -34,7 +34,7 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
             "object.create_terrain",
             text="Create Terrain"
         )
-        if not context.scene.terrainGenerated:
+        if not context.scene.terrainObject:
             pass
         else:
             box = layout.box()
