@@ -16,8 +16,21 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
     def draw(self,context):
         layout = self.layout
 
-        row = layout.row()
-        bt_createTerrain = row.operator(
+        box = layout.box()
+        box.label(
+            text="Terrain Properties:"
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "terrainSize"   
+        )
+        row = box.row()
+        row.prop(
+            context.scene,
+            "numberOfSubdivision"   
+        )
+        bt_createTerrain = box.operator(
             "object.create_terrain",
             text="Create Terrain"
         )
@@ -25,19 +38,6 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
             pass
         else:
             box = layout.box()
-            box.label(
-                text="Terrain Properties:"
-            )
-            row = box.row()
-            row.prop(
-                context.scene,
-                "terrainSize"   
-            )
-            row = box.row()
-            row.prop(
-                context.scene,
-                "numberOfSubdivision"   
-            )
             row = box.row()
             row.prop(
                 context.scene,
