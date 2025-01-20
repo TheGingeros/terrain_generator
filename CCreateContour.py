@@ -27,24 +27,6 @@ bpy.types.Scene.selectable_meshes = bpy.props.EnumProperty(
 bpy.types.Scene.custom_mesh = bpy.props.BoolProperty(
     name="custom_mesh")
 
-class OBJECT_OT_create_contour_lines(bpy.types.Operator):
-    """Creates countour lines from selected object"""
-    bl_idname = "object.create_contour_lines"
-    bl_label = ""
-
-    def execute(self, context):
-        if not context.selected_objects or len(context.selected_objects) > 1:
-            self.report({"WARNING"}, "Select one object!")
-            return {'CANCELLED'}
-
-        self.createContour(context)
-        return {'FINISHED'}
-
-    def createContour(self, context):
-        # Intersect
-        # Delete the plane used for cutting
-        pass
-
 class OBJECT_OT_add_plane_cuts(bpy.types.Operator):
     """Adds plane cuts to the current selected terrain object"""
     bl_idname = "object.add_plane_cuts"
@@ -68,7 +50,7 @@ class OBJECT_OT_add_plane_cuts(bpy.types.Operator):
                 terrainObject = obj
         
         terrainObjectDuplicate = terrainObject.copy()
-        terrainObjectDuplicate.name = terrainObject.name + " Contour Lines"
+        terrainObjectDuplicate.name = "Contour Lines"
         original_collection = terrainObject.users_collection[0]
         original_collection.objects.link(terrainObjectDuplicate)
         terrainObject.hide_set(True)
@@ -105,6 +87,7 @@ class OBJECT_OT_add_plane_cuts(bpy.types.Operator):
         # Create a new plane with the same width and length as the terrain
         bpy.ops.mesh.primitive_plane_add(size=2)  # Default plane size is 2, we will scale it later
         plane = bpy.context.object  # The newly created plane
+        plane.name = "Terrain Cutter"
         # Scale the plane to match the terrain's size
         plane.scale = (width / 2, length / 2, 1)
 

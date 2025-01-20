@@ -115,11 +115,28 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
             if node.type == 'TEX_NOISE':
                 noiseTexture = node
         
-        terrainObject.scale = (context.scene.terrainSize/2,context.scene.terrainSize/2,context.scene.terrainSize/2)
+        #terrainObject.scale = (context.scene.terrainSize/2,context.scene.terrainSize/2,context.scene.terrainSize/2)
         noiseTexture.inputs["Scale"].default_value = context.scene.terrainVariety
         noiseTexture.inputs["Detail"].default_value = context.scene.terrainDetail
         noiseTexture.inputs["Roughness"].default_value = context.scene.terrainRoughness
         noiseTexture.inputs["Distortion"].default_value = context.scene.terrainDistortion
+    def updateScaleValues(self, context):
+        if not context.scene.terrainObject:
+            print("Terrain object no longer exists")
+            return
+        terrainObject = bpy.data.objects.get(context.scene.terrainObject)
+
+        for mod in terrainObject.modifiers:
+            if mod.type == 'NODES':
+                geoMod = mod
+
+        node_group = geoMod.node_group
+        for node in node_group.nodes:
+            if node.type == 'TEX_NOISE':
+                noiseTexture = node
+        
+        if not terrainObject.scale[0] == context.scene.terrainSize/2:
+            terrainObject.scale = (context.scene.terrainSize/2,context.scene.terrainSize/2,context.scene.terrainSize/2)
     def getTerrainObject(self, context):
         sets = []
         objs = context.selectable_objects
@@ -140,7 +157,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
         name="Size of Terrain", 
         default=2,
         min=0,
-        update=updateTerrainValues
+        update=updateScaleValues
         )
     bpy.types.Scene.numberOfSubdivision = bpy.props.IntProperty(
         name="Number of cuts for the grid object",

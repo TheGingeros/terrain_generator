@@ -35,9 +35,7 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
             "object.create_terrain",
             text="Create Terrain"
         )
-        if not context.scene.terrainObject:
-            pass
-        else:
+        if context.scene.terrainObject:
             box = layout.box()
             row = box.row()
             row.prop(
@@ -72,8 +70,8 @@ class OBJECT_PT_ContourLinesGenerator_UI(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "Terrain Generator" #Name of the category in 3d view
     bl_options = {"DEFAULT_CLOSED"}
-    bl_parent_id = OBJECT_PT_TerrainGenerator_UI.bl_idname
-    bl_order = 0
+    #bl_parent_id = OBJECT_PT_TerrainGenerator_UI.bl_idname
+    #bl_order = 0
 
     def draw_header(self, context):
         self.layout.label(text="", icon="MODIFIER_DATA")
@@ -104,6 +102,7 @@ class OBJECT_PT_ContourLinesGenerator_UI(bpy.types.Panel):
             "object.add_plane_cuts",
             text="Add plane cuts"
         )
+
             
 
             
