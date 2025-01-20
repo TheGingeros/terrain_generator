@@ -101,8 +101,8 @@ class OBJECT_PT_ContourLinesGenerator_UI(bpy.types.Panel):
             row.label(text="Selected object will be used")
 
         bt_createContour = box.operator(
-            "object.create_contour_lines",
-            text="Create Contour Lines"
+            "object.add_plane_cuts",
+            text="Add plane cuts"
         )
             
 
