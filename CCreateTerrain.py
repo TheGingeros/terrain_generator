@@ -114,7 +114,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
             if node.type == 'TEX_NOISE':
                 noiseTexture = node
         
-        terrainObject.dimensions = (context.scene.terrainSize,context.scene.terrainSize,terrainObject.dimensions[2])
+        terrainObject.scale = (context.scene.terrainSize/2,context.scene.terrainSize/2,context.scene.terrainSize/2)
         noiseTexture.inputs["Scale"].default_value = context.scene.terrainVariety
         noiseTexture.inputs["Detail"].default_value = context.scene.terrainDetail
         noiseTexture.inputs["Roughness"].default_value = context.scene.terrainRoughness
@@ -156,6 +156,8 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
     bpy.types.Scene.terrainRoughness = bpy.props.FloatProperty(
         name="Terrain Roughness",
         default=0.5,
+        min=0.0,
+        max=1.0,
         update=updateTerrainValues)
     bpy.types.Scene.terrainDistortion = bpy.props.FloatProperty(
         name="Terrain Distortion",
