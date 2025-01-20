@@ -9,6 +9,7 @@ class OBJECT_OT_create_terrain(bpy.types.Operator):
         self.terrainObject = None
     def execute(self, context):
         self.createTerrain(context)
+        self.report({"INFO"}, "Terrain created!")
         return {'FINISHED'}
     def createTerrain(self, context):
         userSize = context.scene.terrainSize
