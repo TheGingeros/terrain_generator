@@ -1,6 +1,7 @@
 import bpy
 
 from .CCreateTerrain import OBJECT_OT_create_terrain
+from .CCreateContour import *
 
 class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
     bl_idname = "OBJECT_PT_TerrainGenerator_UI"
@@ -78,5 +79,31 @@ class OBJECT_PT_ContourLinesGenerator_UI(bpy.types.Panel):
         self.layout.label(text="", icon="MODIFIER_DATA")
 
     def draw(self,context):
-        pass
-        
+        layout = self.layout
+        box = layout.box()
+        row = box.row()
+        row.prop(
+            context.scene,
+            "custom_mesh",
+            text="Use Custom Object"
+        )
+        if(context.scene.custom_mesh):
+            if context.scene.custom_mesh:
+                row.prop(
+                    context.scene, 
+                    "selectable_meshes", 
+                    text="Terrain Object")
+            else:
+                row.label(
+                    text="No Mesh in Scene. Create one."
+                )
+        else:
+            row.label(text="Selected object will be used")
+
+        bt_createContour = box.operator(
+            "object.create_contour_lines",
+            text="Create Contour Lines"
+        )
+            
+
+            
