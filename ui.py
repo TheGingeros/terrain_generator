@@ -63,4 +63,20 @@ class OBJECT_PT_TerrainGenerator_UI(bpy.types.Panel):
                 context.scene,
                 "randomSeed"   
             )
+
+class OBJECT_PT_ContourLinesGenerator_UI(bpy.types.Panel):
+    bl_idname = "OBJECT_PT_ContourLinesGenerator_UI"
+    bl_label = "Contour Lines Generator" #Name when tab is open
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = "Terrain Generator" #Name of the category in 3d view
+    bl_options = {"DEFAULT_CLOSED"}
+    bl_parent_id = OBJECT_PT_TerrainGenerator_UI.bl_idname
+    bl_order = 0
+
+    def draw_header(self, context):
+        self.layout.label(text="", icon="MODIFIER_DATA")
+
+    def draw(self,context):
+        pass
         
